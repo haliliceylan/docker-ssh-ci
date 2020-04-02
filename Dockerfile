@@ -1,6 +1,6 @@
 FROM alpine:3.8
 
-RUN apk add --no-cache openssh-client
+RUN apk add --no-cache openssh-client git unzip sshpass rsync
 
 
 RUN mkdir -p ~/.ssh 
