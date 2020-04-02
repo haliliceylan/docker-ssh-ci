@@ -1,0 +1,19 @@
+image: haliliceylan/ssh-ci
+
+variables:
+  SOURCE_REPO_SSH: ${CI_REPOSITORY_URL}
+  TARGET_REPO_SSH: ssh://example-user@git-codecommit.eu-west-1.amazonaws.com/v1/repos/examle-xample
+  BRANCH: ${CI_COMMIT_REF_NAME}
+
+stages:
+  - deploy
+
+deploy to amazon:
+  stage: deploy
+  script:
+    - eval $(ssh-agent -s)
+    - echo "$AMAZON_GIT_PRIVATE_KEY" > ssh-private-key
+    - ssh-add - < ssh-private-key
+    - git clone -b $BRANCH $SOURCE_REPO_SSH rtSync
+    - cd rtSync
+    - git push $TARGET_REPO_SSH $BRANCH
